@@ -1,8 +1,14 @@
 #include <iostream>
-#include <GLFW/glfw3.h>
+#include "core/Window.hpp"
 
 int main()
 {
-	std::cout<< "Build system works" << std::endl;
+	Platform::Window* window = new Platform::Window();
+
+	while(!window->isClosed())
+	{
+		window->prepareFrame();	
+	}
+
 	return 0;
 }

@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.3)
 project(cube-game)
 
+file(GLOB_RECURSE app_src CONFIGURE_DEPENDS "./src/*.cpp")
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -10,7 +12,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_compile_definitions(PLATFORM_LINUX)
 
-add_executable(App ./src/main.cpp)
+add_executable(App ${app_src})
 
 
 # --------- GLFW AND OPENGL ----------
@@ -26,3 +28,10 @@ target_link_libraries(App PUBLIC OpenGL::GL)
 
 target_include_directories(App PUBLIC ./lib/glfw/include/)
 target_link_libraries(App PUBLIC glfw)
+
+
+# ---------- GLAD ----------
+
+add_subdirectory(./lib/glad/)
+target_include_directories(App PUBLIC ./lib/glad/include/)
+target_link_libraries(App PUBLIC glad)
