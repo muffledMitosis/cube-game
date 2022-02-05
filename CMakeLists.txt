@@ -3,7 +3,6 @@ project(cube-game)
 
 file(GLOB_RECURSE app_src CONFIGURE_DEPENDS "./src/*.cpp")
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
@@ -14,6 +13,11 @@ add_compile_definitions(PLATFORM_LINUX)
 
 add_executable(App ${app_src})
 
+add_custom_command(TARGET App
+									 POST_BUILD
+									 COMMAND ${CMAKE_COMMAND} -E copy_directory
+									 ${CMAKE_SOURCE_DIR}/Assets
+									 ${CMAKE_CURRENT_BINARY_DIR}/Assets)
 
 # --------- GLFW AND OPENGL ----------
 
