@@ -30,8 +30,6 @@ int main()
 	glVertexAttribPointer(0, 3, GL_DOUBLE, GL_FALSE, 3 * sizeof(double), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	
-
 	while(!window->isClosed())
 	{
 		glDrawArrays(GL_TRIANGLES, 0, 3);
