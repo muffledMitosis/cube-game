@@ -19,6 +19,12 @@ add_custom_command(TARGET App
 									 ${CMAKE_SOURCE_DIR}/Assets
 									 ${CMAKE_CURRENT_BINARY_DIR}/Assets)
 
+add_custom_command(TARGET App
+									 POST_BUILD
+									 COMMAND ${CMAKE_COMMAND} -E copy
+									 ${CMAKE_CURRENT_BINARY_DIR}/compile_commands.json
+									 ${CMAKE_SOURCE_DIR}/compile_commands.json)
+
 # --------- GLFW AND OPENGL ----------
 
 add_subdirectory(./lib/glfw/)
