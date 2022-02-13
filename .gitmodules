@@ -4,3 +4,6 @@
 [submodule "lib/glad"]
 	path = lib/glad
 	url = https://github.com/muffledMitosis/glad-4.4.git
+[submodule "lib/spdlog"]
+	path = lib/spdlog
+	url = https://github.com/gabime/spdlog.git
