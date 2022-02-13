@@ -17,9 +17,6 @@ int main()
 		-0.5, -0.5, 0.0
 	};
 
-  // unsigned int VAO;
-  // glGenVertexArrays(1, &VAO);
-  // glBindVertexArray(VAO);
 	Graphics::VAO* vao = new Graphics::VAO();
 
   Graphics::VBO* vbo = new Graphics::VBO();
