@@ -8,7 +8,7 @@ class Log
 public:
  static void Init(spdlog::level::level_enum level)
  {
-	 spdlog::set_pattern("[%T] [%n] [%l] %v");
+	 spdlog::set_pattern("[%T] [%L] %v");
 	 spdlog::set_level(level);
  }
 };
