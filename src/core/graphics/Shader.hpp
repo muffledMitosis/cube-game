@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <filesystem>
+#include "../Log.h"
+#include "glad/glad.h"
 
 namespace Graphics {
 
@@ -24,6 +26,18 @@ private:
 public:
 //	Shader(std::string vertexSource, std::string fragmentSource);
 	Shader(std::filesystem::path vertexFile, std::filesystem::path fragmentFile);
+
+	static void checkShaderCompilation(ShaderProgram shader, std::string type)
+	{
+		int success;
+		char infoLog[512];
+		glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+		if(!success)
+		{
+			glGetShaderInfoLog(shader, 512, NULL, infoLog);
+			LOG_ERROR("SHADER::{1}::COMPILATION::FAIL \n{0}" SEP infoLog SEP type);
+		}
+	}
 };
 
 }

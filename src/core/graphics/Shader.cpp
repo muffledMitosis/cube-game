@@ -27,6 +27,9 @@ namespace Graphics {
 		Graphics::compileShader(this->vertex);
 		Graphics::compileShader(this->fragment);
 
+		Shader::checkShaderCompilation(this->vertex.id, "VERTEX");
+		Shader::checkShaderCompilation(this->fragment.id, "FRAGMENT");
+
 		this->program = glCreateProgram();
 		glAttachShader(this->program, this->vertex.id);
 		glAttachShader(this->program, this->fragment.id);

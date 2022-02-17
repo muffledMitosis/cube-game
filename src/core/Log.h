@@ -13,6 +13,8 @@ public:
  }
 };
 
+#define SEP ,
+
 #define LOG_INFO(x) spdlog::info(x)
 #define LOG_DEBUG(x) spdlog::debug(x)
 #define LOG_WARN(x) spdlog::warn(x)
