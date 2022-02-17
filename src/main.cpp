@@ -3,12 +3,19 @@
 #include "core/graphics/Buffers.hpp"
 #include "core/graphics/Shader.hpp"
 #include "core/Window.hpp"
+#include "spdlog/spdlog.h"
 #include "util/FileIO.hpp"
 #include <string>
 #include <vector>
 
+#include "core/Log.h"
+
 int main()
 {
+	Log::Init(LOG_LEVEL_INFO);
+
+	LOG_INFO("Program start");
+
 	Platform::Window* window = new Platform::Window();
 
 	std::vector<double> data = {
@@ -23,6 +30,7 @@ int main()
   vbo->BufferData(data, GL_STATIC_DRAW);
 
 	Graphics::Shader basic("./Assets/basic.vert", "./Assets/basic.frag");
+	LOG_WARN("Some kinda warking ");
 
   vao->spec(0, 3, GL_DOUBLE, 3* sizeof(double), (void*)0);
 
@@ -31,6 +39,7 @@ int main()
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		window->prepareFrame();	
 	}
+	LOG_ERROR("Some kinda error");
 
 	return 0;
 }
