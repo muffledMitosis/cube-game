@@ -5,6 +5,7 @@
 #include "core/Window.hpp"
 #include "spdlog/spdlog.h"
 #include "util/FileIO.hpp"
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -14,7 +15,7 @@ int main()
 {
 	Log::Init(LOG_LEVEL_INFO);
 
-	Platform::Window* window = new Platform::Window();
+	std::shared_ptr<Platform::Window> window = std::make_shared<Platform::Window>();
 
 	std::vector<double> data = {
 		0.0, 0.5, 0.0,
@@ -22,10 +23,25 @@ int main()
 		-0.5, -0.5, 0.0
 	};
 
+	std::vector<double> vertices = {
+     0.5f,  0.5f, 0.0f,  // top right
+     0.5f, -0.5f, 0.0f,  // bottom right
+    -0.5f, -0.5f, 0.0f,  // bottom left
+    -0.5f,  0.5f, 0.0f   // top left 
+	};
+
+	std::vector<unsigned int> indices = {  // note that we start from 0!
+    0, 1, 3,   // first triangle
+    1, 2, 3    // second triangle
+	};
+
 	Graphics::VAO* vao = new Graphics::VAO();
 
   Graphics::VBO* vbo = new Graphics::VBO();
-  vbo->BufferData(data, GL_STATIC_DRAW);
+  vbo->BufferData(vertices, GL_STATIC_DRAW);
+
+	Graphics::EBO* ebo = new Graphics::EBO();
+	ebo->BufferData(indices, GL_STATIC_DRAW);
 
 	Graphics::Shader basic("./Assets/basic.vert", "./Assets/basic.frag");
 
@@ -33,7 +49,8 @@ int main()
 
 	while(!window->isClosed())
 	{
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		// glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		window->prepareFrame();	
 	}
 
