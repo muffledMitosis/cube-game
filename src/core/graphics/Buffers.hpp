@@ -22,4 +22,13 @@ public:
 	void spec(int index, int size, int dataType, int stride, const void* offset);
 };
 
+class EBO
+{
+public:
+	unsigned int id;
+	EBO();
+	void Bind();
+	void BufferData(std::vector<unsigned int> &data, int streamType);
+};
+
 }

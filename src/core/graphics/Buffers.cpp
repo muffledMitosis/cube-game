@@ -20,6 +20,23 @@ namespace Graphics {
 		glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(double), &data[0], streamType);
 	}
 
+	EBO::EBO()
+	{
+		glGenBuffers(1, &(this->id));
+		this->Bind();
+	}
+
+	void EBO::Bind()
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->id);
+	}
+
+	void EBO::BufferData(std::vector<unsigned int> &data, int streamType)
+	{
+		this->Bind();
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, data.size() * sizeof(unsigned int), &data[0], streamType);
+	}
+
 
 	VAO::VAO()
 	{
