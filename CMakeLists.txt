@@ -51,3 +51,7 @@ target_link_libraries(App PUBLIC glad)
 add_subdirectory(./lib/spdlog/)
 target_include_directories(App PUBLIC ./lib/spdlog/include/)
 target_link_libraries(App PUBLIC spdlog)
+
+# ---------- GLM ----------
+
+target_include_directories(App PUBLIC ./lib/glm/)

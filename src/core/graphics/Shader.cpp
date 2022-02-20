@@ -36,4 +36,9 @@ namespace Graphics {
 		glLinkProgram(this->program);
 		glUseProgram(this->program);
 	}
+
+	Graphics::ShaderProgram Shader::getProgram()
+	{
+		return this->program;
+	}
 }

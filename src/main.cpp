@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+#include <glm/vec3.hpp>
+
 #include "core/Log.h"
 
 int main()
@@ -47,11 +49,16 @@ int main()
 
   vao->spec(0, 3, GL_DOUBLE, 3* sizeof(double), (void*)0);
 
+	int vertexColorLocation = glGetUniformLocation(basic.getProgram(), "ourColor");
+
+	double i{0.0};
 	while(!window->isClosed())
 	{
 		// glDrawArrays(GL_TRIANGLES, 0, 3);
+		glUniform4f(vertexColorLocation, 0.0f, sin(i/10), 0.0f, 1.0f);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		window->prepareFrame();	
+		i++;
 	}
 
 	return 0;
