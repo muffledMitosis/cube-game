@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <filesystem>
+#include <unordered_map>
 #include "../../Log.h"
 #include "glad/glad.h"
 
@@ -18,10 +19,13 @@ using ShaderProgram = unsigned int;
 class Shader
 {
 private:
+	std::unordered_map<std::string, unsigned int> uniformMap;
+
 	Graphics::ShaderProgram program;
 	Graphics::ShaderInfo vertex, fragment;
 	void initializeShaderInfo(std::filesystem::path vertexFile, std::filesystem::path fragmentFile);
 	void compileShader(Graphics::ShaderInfo &shaderInfo);
+	void getUniformLocations();
 
 public:
 //	Shader(std::string vertexSource, std::string fragmentSource);
