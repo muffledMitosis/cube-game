@@ -49,10 +49,11 @@ namespace Graphics {
 		glBindVertexArray(this->id);
 	}
 	
-	void VAO::spec(int index, int size, int dataType, int stride, const void *offset)
+	void VAO::spec(const int& index, const int& size, const int& dataType, const int& stride, const void *offset)
 	{
+		this->Bind();
 		glVertexAttribPointer(index, size, dataType, GL_FALSE, stride, offset);
-		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(index);
 	}
 
 }

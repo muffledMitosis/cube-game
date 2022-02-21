@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <filesystem>
-#include "../Log.h"
+#include "../../Log.h"
 #include "glad/glad.h"
 
 namespace Graphics {

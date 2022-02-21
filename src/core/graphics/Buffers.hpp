@@ -19,7 +19,7 @@ public:
 	unsigned int id;
 	VAO();
 	void Bind();
-	void spec(int index, int size, int dataType, int stride, const void* offset);
+	void spec(const int& index, const int& size, const int& dataType, const int& stride, const void* offset);
 };
 
 class EBO
