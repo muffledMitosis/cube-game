@@ -11,7 +11,7 @@
 
 #include <glm/vec3.hpp>
 
-#include "core/Log.h" #include "core/graphics/Shader/Uniforms.hpp"
+#include "core/Log.h"
 
 int main()
 {
