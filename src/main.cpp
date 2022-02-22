@@ -13,6 +13,9 @@
 
 #include "core/Log.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+
 int main()
 {
 	Log::Init(LOG_LEVEL_INFO);
@@ -32,10 +35,11 @@ int main()
 	// };
 
 	std::vector<double> vertices = {
-     0.5f,  0.5f, 0.0f,  1.0, 0.0, 0.0,// top right
-     0.5f, -0.5f, 0.0f,  0.0, 1.0, 0.0,// bottom right
-    -0.5f, -0.5f, 0.0f,  0.0, 0.0, 1.0,// bottom left
-    -0.5f,  0.5f, 0.0f,  0.5, 0.5, 0.5// top left 
+		// Vertex          // Colors      // TexCoords
+     0.5,  0.5, 0.0,  1.0, 0.0, 0.0, 	1.0, 1.0,
+     0.5, -0.5, 0.0,  0.0, 1.0, 0.0,  1.0, 0.0,
+    -0.5, -0.5, 0.0,  0.0, 0.0, 1.0,  0.0, 0.0,
+    -0.5,  0.5, 0.0,  0.5, 0.5, 0.5,  0.0, 1.0
 	};
 
 	std::vector<unsigned int> indices = {  // note that we start from 0!
@@ -52,9 +56,27 @@ int main()
 	ebo->BufferData(indices, GL_STATIC_DRAW);
 
 	Graphics::Shader basic("./Assets/basic.vert", "./Assets/basic.frag");
+	
+	int width, height, channelNum;
+	unsigned char* imageData = stbi_load("Assets/textures/wall.jpg", &width, &height, &channelNum, 0);
 
-  vao->spec(0, 3, GL_DOUBLE, 6* sizeof(double), (void*)0);
-	vao->spec(1, 3, GL_DOUBLE, 6* sizeof(double), (void*)(3*sizeof(double)));
+	unsigned int texture;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	stbi_image_free(imageData);
+
+  vao->spec(0, 3, GL_DOUBLE, 8* sizeof(double), (void*)0);
+	vao->spec(1, 3, GL_DOUBLE, 8* sizeof(double), (void*)(3*sizeof(double)));
+	vao->spec(2, 2, GL_DOUBLE, 8* sizeof(double), (void*)(6*sizeof(double)));
 
 	double i{0.0};
 	while(!window->isClosed())

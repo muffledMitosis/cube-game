@@ -55,3 +55,7 @@ target_link_libraries(App PUBLIC spdlog)
 # ---------- GLM ----------
 
 target_include_directories(App PUBLIC ./lib/glm/)
+
+# ---------- STB ----------
+
+target_include_directories(App PUBLIC ./lib/stb/)

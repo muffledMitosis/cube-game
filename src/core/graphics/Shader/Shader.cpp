@@ -53,7 +53,7 @@ namespace Graphics {
 
 		for(int i=0; i<tokens.size(); i++)
 		{
-			if(tokens[i] == "uniform")
+			if((tokens[i] == "uniform") && (tokens[i+1].find("sampler") == std::string::npos))
 			{
 				this->uniformMap[tokens[i+2]] = glGetUniformLocation(this->program,
 																														 tokens[i+2].c_str());
