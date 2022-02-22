@@ -5,6 +5,8 @@
 #include "../../Log.h"
 #include "glad/glad.h"
 
+#include <glm/vec3.hpp>
+
 namespace Graphics {
 
 struct ShaderInfo
@@ -19,7 +21,7 @@ using ShaderProgram = unsigned int;
 class Shader
 {
 private:
-	std::unordered_map<std::string, unsigned int> uniformMap;
+	std::unordered_map<std::string, int> uniformMap;
 
 	Graphics::ShaderProgram program;
 	Graphics::ShaderInfo vertex, fragment;
@@ -42,6 +44,7 @@ public:
 			LOG_ERROR("SHADER::{1}::COMPILATION::FAIL \n{0}" SEP infoLog SEP type);
 		}
 	}
+	void setVec3(const std::string& var, const glm::vec3& data);
 
 	Graphics::ShaderProgram getProgram();
 };

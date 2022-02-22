@@ -1,11 +1,11 @@
 #include "Shader.hpp"
 #include "glad/glad.h"
 #include "../../../util/FileIO.hpp"
+#include "../../../util/StringUtils.hpp"
+#include "../../Log.h"
 
-#include <vector>
-#include <sstream>
-#include <string>
-#include <iostream>
+#include <functional>
+#include <glm/vec3.hpp>
 
 namespace Graphics {
 
@@ -35,54 +35,35 @@ namespace Graphics {
 		Shader::checkShaderCompilation(this->vertex.id, "VERTEX");
 		Shader::checkShaderCompilation(this->fragment.id, "FRAGMENT");
 
-		this->getUniformLocations();
-
 		this->program = glCreateProgram();
 		glAttachShader(this->program, this->vertex.id);
 		glAttachShader(this->program, this->fragment.id);
 		glLinkProgram(this->program);
 		glUseProgram(this->program);
+
+		this->getUniformLocations();
 	}
 
 	void Shader::getUniformLocations()
 	{
 		std::vector<std::string> tokens;
 
-		std::string delim = " ";
-		std::string token;
-		size_t pos =0;
+		Utils::tokenize(this->vertex.source, tokens);
+		Utils::tokenize(this->fragment.source, tokens);
 
-		std::cout<<this->vertex.source << std::endl;
-
-		while((pos = this->vertex.source.find(delim)) != std::string::npos)
+		for(int i=0; i<tokens.size(); i++)
 		{
-			token = this->vertex.source.substr(0, pos);
-			std::cout<<token<<std::endl;
-			tokens.push_back(token);
-			this->vertex.source.erase(0, pos + delim.length());
+			if(tokens[i] == "uniform")
+			{
+				this->uniformMap[tokens[i+2]] = glGetUniformLocation(this->program,
+																														 tokens[i+2].c_str());
+			}
 		}
+	}
 
-		// ss = std::stringstream(this->fragment.source);
-		// while(getline(ss, inter, " "))
-		// {
-		// 	tokens.push_back(inter);
-		// }
-
-		// std::vector<std::string> uniformNames;
-		//
-		// for(int i=0; i<tokens.size(); i++)
-		// {
-		// 	if(tokens[i] == "uniform")
-		// 	{
-		// 		uniformNames.push_back(tokens[i+2]);
-		// 	}
-		// }
-		//
-		// for(std::string uniform : uniformNames)
-		// {
-		// 	std::cout<<uniform<<std::endl;
-		// }
-
+	void Shader::setVec3(const std::string& var, const glm::vec3& data)
+	{
+		glUniform3f(this->uniformMap[var], data.x, data.y, data.z);
 	}
 
 	Graphics::ShaderProgram Shader::getProgram()
