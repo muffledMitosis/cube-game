@@ -2,5 +2,6 @@
 #include <vector>
 #include <string>
 namespace Utils {
-	std::vector<std::string> tokenize(std::string str);
+	void tokenize(const std::string& str, std::vector<std::string>& vec);
+	std::vector<std::string> tokenize(const std::string& str);
 }
