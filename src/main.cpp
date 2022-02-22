@@ -3,7 +3,6 @@
 #include "core/graphics/Buffers.hpp"
 #include "core/graphics/Shader/Shader.hpp"
 #include "core/Window.hpp"
-#include "glm/fwd.hpp"
 #include "spdlog/spdlog.h"
 #include "util/FileIO.hpp"
 #include <memory>
@@ -12,8 +11,7 @@
 
 #include <glm/vec3.hpp>
 
-#include "core/Log.h"
-#include "core/graphics/Shader/Uniforms.hpp"
+#include "core/Log.h" #include "core/graphics/Shader/Uniforms.hpp"
 
 int main()
 {
@@ -63,6 +61,7 @@ int main()
 	{
 		// glDrawArrays(GL_TRIANGLES, 0, 3);
 		// Graphics::Uniform::setUniform(basic.getProgram(), "ourColor", glm::vec4(0.0, sin(i/10), 0.0, 1.0));
+		basic.setVec3("lol", glm::vec3(sin(i/10)));
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		window->prepareFrame();	
 		i++;
