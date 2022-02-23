@@ -74,9 +74,9 @@ int main()
 
 	stbi_image_free(imageData);
 
-  vao->spec(0, 3, GL_DOUBLE, 8* sizeof(double), (void*)0);
-	vao->spec(1, 3, GL_DOUBLE, 8* sizeof(double), (void*)(3*sizeof(double)));
-	vao->spec(2, 2, GL_DOUBLE, 8* sizeof(double), (void*)(6*sizeof(double)));
+  vao->spec(0, 3, GL_DOUBLE, 8* sizeof(double), 0);
+	vao->spec(1, 3, GL_DOUBLE, 8* sizeof(double), 3*sizeof(double));
+	vao->spec(2, 2, GL_DOUBLE, 8* sizeof(double), 6*sizeof(double));
 
 	double i{0.0};
 	while(!window->isClosed())
