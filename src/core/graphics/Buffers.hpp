@@ -2,6 +2,9 @@
 
 #include <cstdint>
 #include <vector>
+#include <filesystem>
+#include <unordered_map>
+
 namespace Graphics {
 
 class VBO
@@ -30,5 +33,30 @@ public:
 	void Bind();
 	void BufferData(std::vector<unsigned int> &data, int streamType);
 };
+
+struct ImageInfo
+{
+	int width, height, channelNum;
+	unsigned char* image_data;
+};
+
+struct TextureInfo
+{
+	int location;
+	unsigned long long unit;
+};
+
+class Texture
+{
+private:
+	unsigned int id;
+	Graphics::ImageInfo imageInfo;
+public:
+	static std::unordered_map<std::string, Graphics::TextureInfo> texturePool;
+	Texture(std::filesystem::path texturePath, std::string varName);
+	void Bind();
+	~Texture();
+};
+
 
 }

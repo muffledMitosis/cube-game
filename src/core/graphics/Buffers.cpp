@@ -1,6 +1,12 @@
 #include "Buffers.hpp"
 #include "glad/glad.h"
 #include <vector>
+#include <filesystem>
+#include <unordered_map>
+
+#include <stb_image.h>
+#include "../Log.h"
+#include <iostream>
 
 namespace Graphics {
 	VBO::VBO()
@@ -54,6 +60,48 @@ namespace Graphics {
 		this->Bind();
 		glVertexAttribPointer(index, size, dataType, GL_FALSE, stride, (void*)offset);
 		glEnableVertexAttribArray(index);
+	}
+
+	std::unordered_map<std::string, Graphics::TextureInfo> Texture::texturePool;
+
+	Texture::Texture(std::filesystem::path texturePath, std::string varName)
+	{
+		this->imageInfo.image_data = stbi_load(texturePath.generic_string().c_str(),
+																						&this->imageInfo.width,
+																						&this->imageInfo.height,
+																						&this->imageInfo.channelNum, 0);
+
+		glGenTextures(1, &this->id);
+		glActiveTexture(GL_TEXTURE0 + Texture::texturePool.size());
+		this->Bind();
+		int format = texturePath.extension()==".png" ? GL_RGBA : GL_RGB;
+		glTexImage2D(GL_TEXTURE_2D, 0,
+								 GL_RGB,
+								 this->imageInfo.width,
+								 this->imageInfo.height, 0,
+								 format,
+								 GL_UNSIGNED_BYTE,
+								 this->imageInfo.image_data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		int currentProgram;
+		glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
+
+		Texture::texturePool[varName] = {
+			glGetUniformLocation(currentProgram, varName.c_str()),
+			Texture::texturePool.size()
+		};
+		glUniform1i(Texture::texturePool[varName].location, Texture::texturePool[varName].unit);
+	}
+
+	void Texture::Bind()
+	{
+		glBindTexture(GL_TEXTURE_2D, this->id);
+	}
+
+	Texture::~Texture()
+	{
+		stbi_image_free(this->imageInfo.image_data);
 	}
 
 }

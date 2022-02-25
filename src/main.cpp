@@ -57,38 +57,13 @@ int main()
 
 	Graphics::Shader basic("./Assets/basic.vert", "./Assets/basic.frag");
 	
-	int width, height, channelNum;
-	unsigned char* imageData = stbi_load("Assets/textures/wall.jpg", &width, &height, &channelNum, 0);
-
-	unsigned int texture;
-	glGenTextures(1, &texture);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture);
-
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	stbi_image_free(imageData);
-
-	unsigned int texture2;
-	glGenTextures(1, &texture2);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, texture2);
-
-	imageData = stbi_load("Assets/textures/awesomeface.png", &width, &height, &channelNum, 0);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	stbi_image_free(imageData);
-
-	glUniform1i(glGetUniformLocation(basic.getProgram(), "texture1"), 0);
-	glUniform1i(glGetUniformLocation(basic.getProgram(), "texture2"), 1);
+	Graphics::Texture* texture2 = new Graphics::Texture("Assets/textures/awesomeface.png", "texture2");
+	Graphics::Texture* texture1 = new Graphics::Texture("Assets/textures/wall.jpg", "texture1");
 
   vao->spec(0, 3, GL_DOUBLE, 8* sizeof(double), 0);
 	vao->spec(1, 3, GL_DOUBLE, 8* sizeof(double), 3*sizeof(double));
@@ -97,9 +72,7 @@ int main()
 	double i{0.0};
 	while(!window->isClosed())
 	{
-		// glDrawArrays(GL_TRIANGLES, 0, 3);
-		// Graphics::Uniform::setUniform(basic.getProgram(), "ourColor", glm::vec4(0.0, sin(i/10), 0.0, 1.0));
-		basic.setVec3("lol", glm::vec3(sin(i/10)));
+		basic.setVec3("lol", glm::vec3(sin(i/1000)));
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		window->prepareFrame();	
 		i++;
