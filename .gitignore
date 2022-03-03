@@ -3,3 +3,4 @@ compile_commands.json
 .clangd
 .vim
 .cache
+.vscode
