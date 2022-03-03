@@ -1,7 +1,7 @@
 #include <iostream>
 #include <glad/glad.h>
-#include "core/graphics/Buffers.hpp"
-#include "core/graphics/Shader/Shader.hpp"
+#include "core/graphics/API/Buffers.hpp"
+#include "core/graphics/API/Shader/Shader.hpp"
 #include "core/Window.hpp"
 #include "spdlog/spdlog.h"
 #include "util/FileIO.hpp"
@@ -9,7 +9,9 @@
 #include <string>
 #include <vector>
 
-#include <glm/vec3.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "core/Log.h"
 
@@ -69,10 +71,17 @@ int main()
 	vao->spec(1, 3, GL_DOUBLE, 8* sizeof(double), 3*sizeof(double));
 	vao->spec(2, 2, GL_DOUBLE, 8* sizeof(double), 6*sizeof(double));
 
+	glm::mat4 trans = glm::mat4(1.0);
+	trans = glm::translate(trans, glm::vec3(0.5, 0.5, 0.0));
+
 	double i{0.0};
 	while(!window->isClosed())
 	{
-		basic.setVec3("lol", glm::vec3(sin(i/1000)));
+		// basic.setVec3("lol", glm::vec3(sin(i/1000)));
+		basic.setVec3("lol", glm::vec3(1));
+		trans = glm::rotate(trans, (float)sin(i/1000)/1000, glm::vec3(0, 0, 1));
+		basic.setMat4("transform", trans);
+		glClear(GL_COLOR_BUFFER_BIT);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		window->prepareFrame();	
 		i++;
