@@ -22,7 +22,7 @@ int main()
 {
 	Log::Init(LOG_LEVEL_INFO);
 
-	std::shared_ptr<Platform::Window> window = std::make_shared<Platform::Window>();
+	std::shared_ptr<Platform::Window> window = std::make_shared<Platform::Window>(800, 600);
 
 	std::vector<double> data = {
 		0.0, 0.5, 0.0, 				1.0, 0.0, 0.0,
@@ -71,16 +71,25 @@ int main()
 	vao->spec(1, 3, GL_DOUBLE, 8* sizeof(double), 3*sizeof(double));
 	vao->spec(2, 2, GL_DOUBLE, 8* sizeof(double), 6*sizeof(double));
 
-	glm::mat4 trans = glm::mat4(1.0);
-	trans = glm::translate(trans, glm::vec3(0.5, 0.5, 0.0));
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	glm::mat4 view = glm::mat4(1.0f);
+	view = glm::translate(view, glm::vec3(0.0f, -0.05f, -0.17f));
+
+	// glm::mat4 proj = glm::mat4(1.0);
+	glm::mat4 proj;
+	proj = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+
+	basic.setMat4("model", model);
+	basic.setMat4("view", view);
+	basic.setMat4("projection", proj);
 
 	double i{0.0};
 	while(!window->isClosed())
 	{
 		// basic.setVec3("lol", glm::vec3(sin(i/1000)));
 		basic.setVec3("lol", glm::vec3(1));
-		trans = glm::rotate(trans, (float)sin(i/1000)/1000, glm::vec3(0, 0, 1));
-		basic.setMat4("transform", trans);
 		glClear(GL_COLOR_BUFFER_BIT);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		window->prepareFrame();	
