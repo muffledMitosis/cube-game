@@ -11,6 +11,7 @@ public:
 
 	void prepareFrame();
 	glm::vec2 getDimensions();
+	GLFWwindow* getRawWindow();
 	bool isClosed();
 
 	glm::vec2 dimensions;

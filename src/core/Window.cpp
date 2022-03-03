@@ -28,6 +28,11 @@ glm::vec2 Window::getDimensions()
 	return this->dimensions;
 }
 
+GLFWwindow* Window::getRawWindow()
+{
+	return this->m_rawWindow;
+}
+
 void Window::prepareFrame()
 {
 	glfwSwapBuffers(this->m_rawWindow);

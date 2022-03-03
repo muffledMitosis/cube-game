@@ -9,6 +9,9 @@
 #include <string>
 #include <vector>
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -17,6 +20,11 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+
+#include <imgui.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
+// #include <imgui_stdlib.h>
 
 int main()
 {
@@ -74,24 +82,55 @@ int main()
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-	glm::mat4 view = glm::mat4(1.0f);
-	view = glm::translate(view, glm::vec3(0.0f, -0.05f, -0.17f));
+	// glm::mat4 view = glm::mat4(1.0f);
+	// view = glm::translate(view, glm::vec3(0.0f, -0.05f, -0.17f));
 
 	// glm::mat4 proj = glm::mat4(1.0);
 	glm::mat4 proj;
 	proj = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
-	basic.setMat4("model", model);
-	basic.setMat4("view", view);
-	basic.setMat4("projection", proj);
 
 	double i{0.0};
+	float trans[] = {0.0f, -0.05f, -0.17f};
+	float rot[] = {0.0f, 0.0f, 0.0f};
+
+	ImGui::CreateContext();
+	ImGui_ImplGlfw_InitForOpenGL(window->getRawWindow(), true);
+	ImGui_ImplOpenGL3_Init();
+
 	while(!window->isClosed())
 	{
 		// basic.setVec3("lol", glm::vec3(sin(i/1000)));
 		basic.setVec3("lol", glm::vec3(1));
 		glClear(GL_COLOR_BUFFER_BIT);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		glm::mat4 view = glm::mat4(1.0f);
+		view = glm::translate(view, glm::vec3(trans[0], trans[1], trans[2]));
+
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::rotate(model, glm::radians(rot[0]), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rot[1]), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rot[2]), glm::vec3(0.0f, 0.0f, 1.0f));
+
+		basic.setMat4("model", model);
+		basic.setMat4("view", view);
+		basic.setMat4("projection", proj);
+
+		ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+
+    ImGui::NewFrame();
+
+		{
+			ImGui::SliderFloat3("Trans", trans, -5.0f, 5.0f);
+			ImGui::SliderFloat3("Rot", rot, 0.0, 360.0);
+		}
+
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 		window->prepareFrame();	
 		i++;
 	}
