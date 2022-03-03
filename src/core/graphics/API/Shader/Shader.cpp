@@ -1,11 +1,13 @@
 #include "Shader.hpp"
 #include "glad/glad.h"
-#include "../../../util/FileIO.hpp"
-#include "../../../util/StringUtils.hpp"
-#include "../../Log.h"
+#include "../../../../util/FileIO.hpp"
+#include "../../../../util/StringUtils.hpp"
+#include "../../../Log.h"
 
 #include <functional>
-#include <glm/vec3.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Graphics {
 
@@ -64,6 +66,12 @@ namespace Graphics {
 	void Shader::setVec3(const std::string& var, const glm::vec3& data)
 	{
 		glUniform3f(this->uniformMap[var], data.x, data.y, data.z);
+	}
+
+	void Shader::setMat4(const std::string& var, const glm::mat4& data)
+	{
+		// glUniform3f(this->uniformMap[var], data.x, data.y, data.z);
+		glUniformMatrix4fv(this->uniformMap[var], 1, GL_FALSE, glm::value_ptr(data));
 	}
 
 	Graphics::ShaderProgram Shader::getProgram()
