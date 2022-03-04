@@ -32,11 +32,11 @@ int main()
 
 	std::shared_ptr<Platform::Window> window = std::make_shared<Platform::Window>(800, 600);
 
-	std::vector<double> data = {
-		0.0, 0.5, 0.0, 				1.0, 0.0, 0.0,
-		0.5, -0.5, 0.0, 			0.0, 1.0, 0.0,
-		-0.5, -0.5, 0.0, 			0.0, 0.0, 1.0
-	};
+	// std::vector<double> data = {
+	// 	0.0, 0.5, 0.0, 				1.0, 0.0, 0.0,
+	// 	0.5, -0.5, 0.0, 			0.0, 1.0, 0.0,
+	// 	-0.5, -0.5, 0.0, 			0.0, 0.0, 1.0
+	// };
 
 	// std::vector<double> data = {
 	// 	0.0, 0.5, 0.0,
@@ -44,26 +44,70 @@ int main()
 	// 	-0.5, -0.5, 0.0
 	// };
 
-	std::vector<double> vertices = {
-		// Vertex          // Colors      // TexCoords
-     0.5,  0.5, 0.0,  1.0, 0.0, 0.0, 	1.0, 1.0,
-     0.5, -0.5, 0.0,  0.0, 1.0, 0.0,  1.0, 0.0,
-    -0.5, -0.5, 0.0,  0.0, 0.0, 1.0,  0.0, 0.0,
-    -0.5,  0.5, 0.0,  0.5, 0.5, 0.5,  0.0, 1.0
-	};
+	// std::vector<double> vertices = {
+	// 	// Vertex          // Colors      // TexCoords
+  //    0.5,  0.5, 0.0,  1.0, 0.0, 0.0, 	1.0, 1.0,
+  //    0.5, -0.5, 0.0,  0.0, 1.0, 0.0,  1.0, 0.0,
+  //   -0.5, -0.5, 0.0,  0.0, 0.0, 1.0,  0.0, 0.0,
+  //   -0.5,  0.5, 0.0,  0.5, 0.5, 0.5,  0.0, 1.0
+	// };
 
-	std::vector<unsigned int> indices = {  // note that we start from 0!
-    0, 1, 3,   // first triangle
-    1, 2, 3    // second triangle
-	};
+	// std::vector<unsigned int> indices = {  // note that we start from 0!
+  //   0, 1, 3,   // first triangle
+  //   1, 2, 3    // second triangle
+	// };
+
+	std::vector<double> cube_vertices = {
+    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+     0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+};
 
 	Graphics::VAO* vao = new Graphics::VAO();
 
   Graphics::VBO* vbo = new Graphics::VBO();
-  vbo->BufferData(vertices, GL_STATIC_DRAW);
+  vbo->BufferData(cube_vertices, GL_STATIC_DRAW);
 
-	Graphics::EBO* ebo = new Graphics::EBO();
-	ebo->BufferData(indices, GL_STATIC_DRAW);
+	// Graphics::EBO* ebo = new Graphics::EBO();
+	// ebo->BufferData(indices, GL_STATIC_DRAW);
 
 	Graphics::Shader basic("./Assets/basic.vert", "./Assets/basic.frag");
 	
@@ -75,9 +119,12 @@ int main()
 	Graphics::Texture* texture2 = new Graphics::Texture("Assets/textures/awesomeface.png", "texture2");
 	Graphics::Texture* texture1 = new Graphics::Texture("Assets/textures/wall.jpg", "texture1");
 
-  vao->spec(0, 3, GL_DOUBLE, 8* sizeof(double), 0);
-	vao->spec(1, 3, GL_DOUBLE, 8* sizeof(double), 3*sizeof(double));
-	vao->spec(2, 2, GL_DOUBLE, 8* sizeof(double), 6*sizeof(double));
+  // vao->spec(0, 3, GL_DOUBLE, 8* sizeof(double), 0);
+	// vao->spec(1, 3, GL_DOUBLE, 8* sizeof(double), 3*sizeof(double));
+	// vao->spec(2, 2, GL_DOUBLE, 8* sizeof(double), 6*sizeof(double));
+
+	vao->spec(0, 3, GL_DOUBLE, 5*sizeof(double), 0);
+	vao->spec(1, 2, GL_DOUBLE, 5*sizeof(double), 3*sizeof(double));
 
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -94,6 +141,8 @@ int main()
 	float trans[] = {0.0f, -0.05f, -0.17f};
 	float rot[] = {0.0f, 0.0f, 0.0f};
 
+	glEnable(GL_DEPTH_TEST);
+
 	ImGui::CreateContext();
 	ImGui_ImplGlfw_InitForOpenGL(window->getRawWindow(), true);
 	ImGui_ImplOpenGL3_Init();
@@ -102,8 +151,9 @@ int main()
 	{
 		// basic.setVec3("lol", glm::vec3(sin(i/1000)));
 		basic.setVec3("lol", glm::vec3(1));
-		glClear(GL_COLOR_BUFFER_BIT);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		// glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		glm::mat4 view = glm::mat4(1.0f);
 		view = glm::translate(view, glm::vec3(trans[0], trans[1], trans[2]));
