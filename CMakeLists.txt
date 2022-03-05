@@ -11,11 +11,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_compile_definitions(PLATFORM_LINUX)
 
-set(IMGUI_PATH ./lib/imgui/)
-file(GLOB_RECURSE imgui_src CONFIGURE_DEPENDS ${IMGUI_PATH}/*.cpp)
-
-add_executable(App ${app_src} ${imgui_src})
-target_include_directories(App PUBLIC ./lib/imgui/)
+add_executable(App ${app_src})
 
 add_custom_command(TARGET App
 									 POST_BUILD
@@ -66,10 +62,12 @@ target_include_directories(App PUBLIC ./lib/stb/)
 
 # # ---------- IMGUI ----------
 
-# set(IMGUI_PATH ./lib/imgui/)
+set(IMGUI_PATH ./lib/imgui/)
 
-# file(GLOB_RECURSE imgui_src CONFIGURE_DEPENDS ${IMGUI_PATH}/*.cpp)
-# add_library(IMGUI STATIC ${imgui_src})
-# target_include_directories(IMGUI PUBLIC ./lib/imgui/ ./lib/glfw)
-# target_include_directories(App PUBLIC ./lib/imgui/)
-# target_link_libraries(App PUBLIC IMGUI)
+file(GLOB imgui_src CONFIGURE_DEPENDS ${IMGUI_PATH}/*.cpp)
+list(APPEND imgui_src ${IMGUI_PATH}/backends/imgui_impl_opengl3.cpp)
+list(APPEND imgui_src ${IMGUI_PATH}/backends/imgui_impl_glfw.cpp)
+add_library(IMGUI STATIC ${imgui_src})
+target_include_directories(IMGUI PUBLIC ./lib/imgui/ ./lib/glfw/include/)
+target_include_directories(App PUBLIC ./lib/imgui/)
+target_link_libraries(App PUBLIC IMGUI)
