@@ -144,16 +144,22 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 
 	ImGui::CreateContext();
+
+	ImGuiIO &io = ImGui::GetIO();
+	// io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
 	ImGui_ImplGlfw_InitForOpenGL(window->getRawWindow(), true);
 	ImGui_ImplOpenGL3_Init();
 
 	while(!window->isClosed())
 	{
+
+
 		// basic.setVec3("lol", glm::vec3(sin(i/1000)));
 		basic.setVec3("lol", glm::vec3(1));
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		// glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		glm::mat4 view = glm::mat4(1.0f);
 		view = glm::translate(view, glm::vec3(trans[0], trans[1], trans[2]));
@@ -167,6 +173,7 @@ int main()
 		basic.setMat4("view", view);
 		basic.setMat4("projection", proj);
 
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 		ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
 
@@ -176,10 +183,18 @@ int main()
 			ImGui::SliderFloat3("Trans", trans, -5.0f, 5.0f);
 			ImGui::SliderFloat3("Rot", rot, 0.0, 360.0);
 		}
-
+		
 
 		ImGui::Render();
+
+		GLFWwindow* backup_context = glfwGetCurrentContext();
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+		glfwMakeContextCurrent(backup_context);
+
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		// ImGui::EndFrame();
+
 
 		window->prepareFrame();	
 		i++;
