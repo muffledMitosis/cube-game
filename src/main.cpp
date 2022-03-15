@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+#include "core/Input.h"
+
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -73,6 +75,7 @@ void mouse_cb(GLFWwindow* window, double xpos, double ypos)
 
 int main()
 {
+	Input::InputManager* inputManager = Input::InputManager::getInstance();
 	Log::Init(LOG_LEVEL_INFO);
 
 	std::shared_ptr<Platform::Window> window = std::make_shared<Platform::Window>(800, 600);
@@ -226,10 +229,6 @@ int main()
 
 	while(!window->isClosed())
 	{
-
-
-
-
 		// basic.setVec3("lol", glm::vec3(sin(i/1000)));
 		basic.setVec3("lol", glm::vec3(1));
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
