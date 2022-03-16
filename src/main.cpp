@@ -197,7 +197,6 @@ int main()
 	glm::mat4 proj;
 	proj = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
-
 	double i{0.0};
 	float trans[] = {0.0f, -0.05f, -0.17f};
 	float rot[] = {0.0f, 0.0f, 0.0f};
