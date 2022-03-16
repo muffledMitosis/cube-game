@@ -199,8 +199,8 @@ int main()
 
 	// glm::mat4 proj = glm::mat4(1.0);
 	glm::mat4 proj;
-	proj = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-	// proj = cam->projection;
+	// proj = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+	proj = cam->projection;
 
 
 	double i{0.0};

@@ -6,9 +6,9 @@ namespace World {
 class Camera
 {
 public:
-	glm::vec3 position;
-	glm::vec3 front;
-	glm::vec3 up;
+	glm::vec3 position = glm::vec3(0, 0, 3);
+	glm::vec3 front = glm::vec3(0, 0, -1);
+	glm::vec3 up = glm::vec3(0, 1, 0);
 	glm::vec3 direction;
 
 	glm::mat4 projection;
