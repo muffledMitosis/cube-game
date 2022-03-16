@@ -3,13 +3,14 @@
 #include "core/graphics/API/Buffers.hpp"
 #include "core/graphics/API/Shader/Shader.hpp"
 #include "core/Window.hpp"
+#include "core/world/Camera.hpp"
 #include "spdlog/spdlog.h"
 #include "util/FileIO.hpp"
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "core/Input.h"
+#include "core/Input/Input.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -28,23 +29,25 @@
 #include <backends/imgui_impl_opengl3.h>
 // #include <imgui_stdlib.h>
 
-glm::vec3 cameraPos = glm::vec3(0, 0, 3);
-glm::vec3 cameraFront = glm::vec3(0, 0, -1);
-glm::vec3 cameraUp = glm::vec3(0, 1, 0);
-float yaw = -90;
-float pitch = 0;
+World::Camera* cam = new World::Camera(800, 600);
+
+// glm::vec3 cameraPos = glm::vec3(0, 0, 3);
+// glm::vec3 cameraFront = glm::vec3(0, 0, -1);
+// glm::vec3 cameraUp = glm::vec3(0, 1, 0);
+// float yaw = -90;
+// float pitch = 0;
 
 void processInput(GLFWwindow *window)
 {
     const float cameraSpeed = 0.05f; // adjust accordingly
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        cameraPos += cameraSpeed * cameraFront;
+        cam->position += cameraSpeed * cam->front;
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        cameraPos -= cameraSpeed * cameraFront;
+        cam->position -= cameraSpeed * cam->front;
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+        cam->position -= glm::normalize(glm::cross(cam->front, cam->up)) * cameraSpeed;
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+        cam->position += glm::normalize(glm::cross(cam->front, cam->up)) * cameraSpeed;
 }
 
 void mouse_cb(GLFWwindow* window, double xpos, double ypos)
@@ -69,8 +72,8 @@ void mouse_cb(GLFWwindow* window, double xpos, double ypos)
 	dx *= sensitivity;
 	dy *= sensitivity;
 
-	yaw += dx;
-	pitch -= dy;
+	cam->yaw += dx;
+	cam->pitch -= dy;
 }
 
 int main()
@@ -79,6 +82,7 @@ int main()
 	Log::Init(LOG_LEVEL_INFO);
 
 	std::shared_ptr<Platform::Window> window = std::make_shared<Platform::Window>(800, 600);
+
 
 	// std::vector<double> data = {
 	// 	0.0, 0.5, 0.0, 				1.0, 0.0, 0.0,
@@ -195,7 +199,8 @@ int main()
 
 	// glm::mat4 proj = glm::mat4(1.0);
 	glm::mat4 proj;
-	proj = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+	// proj = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+	proj = cam->projection;
 
 	double i{0.0};
 	float trans[] = {0.0f, -0.05f, -0.17f};
@@ -243,15 +248,17 @@ int main()
 	float camX = sin(glfwGetTime()) * radius;
 	float camZ = cos(glfwGetTime()) * radius;
 
-	glm::vec3 direction;
-	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	direction.y = sin(glm::radians(pitch));
-	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	cameraFront = glm::normalize(direction);
+	// glm::vec3 direction;
+	// direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	// direction.y = sin(glm::radians(pitch));
+	// direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	// cameraFront = glm::normalize(direction);
+	cam->update();
 
 	processInput(window->getRawWindow());
 	glm::mat4 view;
-	view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+	// view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+	view = cam->getView();
 
 
 		basic.setMat4("view", view);

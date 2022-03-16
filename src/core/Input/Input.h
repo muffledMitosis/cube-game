@@ -10,8 +10,8 @@ namespace Input
 	{
 	private:
 	 static InputManager* instance;
-	 std::unordered_map<int, std::function<void(GLFWwindow*)>> keyFunctionTable;
-		InputManager();
+	 std::unordered_map<int, std::vector<std::function<void(GLFWwindow*)>>> keyFunctionTable;
+	InputManager();
 		
 	public:
 	 static InputManager* getInstance();
