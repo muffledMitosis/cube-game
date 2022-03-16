@@ -13,6 +13,8 @@ add_compile_definitions(PLATFORM_LINUX)
 
 add_executable(App ${app_src})
 
+target_precompile_headers(App PRIVATE src/epch.hpp)
+
 add_custom_command(TARGET App
 									 POST_BUILD
 									 COMMAND ${CMAKE_COMMAND} -E copy_directory

@@ -1,33 +1,4 @@
-#include <iostream>
-#include <glad/glad.h>
-#include "core/graphics/API/Buffers.hpp"
-#include "core/graphics/API/Shader/Shader.hpp"
-#include "core/Window.hpp"
-#include "core/world/Camera.hpp"
-#include "spdlog/spdlog.h"
-#include "util/FileIO.hpp"
-#include <memory>
-#include <string>
-#include <vector>
-
-#include "core/Input/Input.h"
-
-#define _USE_MATH_DEFINES
-#include <math.h>
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include "core/Log.h"
-
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
-
-#include <imgui.h>
-#include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_opengl3.h>
-// #include <imgui_stdlib.h>
+#include "./epch.hpp"
 
 World::Camera* cam = new World::Camera(800, 600);
 
