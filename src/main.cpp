@@ -165,12 +165,7 @@ int main()
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-	// glm::mat4 view = glm::mat4(1.0f);
-	// view = glm::translate(view, glm::vec3(0.0f, -0.05f, -0.17f));
-
-	// glm::mat4 proj = glm::mat4(1.0);
 	glm::mat4 proj;
-	// proj = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 	proj = cam->projection;
 
 	double i{0.0};
@@ -188,17 +183,6 @@ int main()
 	ImGui_ImplGlfw_InitForOpenGL(window->getRawWindow(), true);
 	ImGui_ImplOpenGL3_Init();
 
-	float cp[] = {0, 0, 3};
-	float ct[] = {0, 0, 0};
-
-	// glm::vec3 cameraPos = glm::vec3(cp[0], cp[1], cp[2]);
-	// glm::vec3 cameraTarget = glm::vec3(ct[0], ct[1], ct[2]);
-	// glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
-
-	// glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f); 
-	// glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
-	// glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
-
 	glfwSetInputMode(window->getRawWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window->getRawWindow(), mouse_cb);
 
@@ -209,26 +193,14 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		// glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-		// glm::mat4 view = glm::mat4(1.0f);
-		// // view = glm::translate(view, glm::vec3(trans[0], trans[1], trans[2]));
-		// view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f), 
-  	// 	   glm::vec3(0.0f, 0.0f, 0.0f), 
-  	// 	   glm::vec3(0.0f, 1.0f, 0.0f));
-
 	const float radius = 10.0f;
 	float camX = sin(glfwGetTime()) * radius;
 	float camZ = cos(glfwGetTime()) * radius;
 
-	// glm::vec3 direction;
-	// direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	// direction.y = sin(glm::radians(pitch));
-	// direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	// cameraFront = glm::normalize(direction);
 	cam->update();
 
 	processInput(window->getRawWindow());
 	glm::mat4 view;
-	// view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 	view = cam->getView();
 
 
@@ -265,8 +237,6 @@ int main()
 		glfwMakeContextCurrent(backup_context);
 
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-		// ImGui::EndFrame();
-
 
 		window->prepareFrame();	
 		i++;
