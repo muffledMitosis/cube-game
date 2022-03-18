@@ -14,7 +14,7 @@ void InputCapture::attachCB(const int& key, const Input::InputCB& cb)
 	Input::InputManager::getInstance()->attachFunction(key, cb);
 }
 
-void attachMouseFunction(const Input::MouseCB& cb)
+void InputCapture::attachMouseFunction(const Input::MouseCB& cb)
 {
 	Input::InputManager::mouseFunctions.push_back(cb);
 }

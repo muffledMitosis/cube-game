@@ -1,39 +1,12 @@
 #include "./epch.hpp"
 
-World::Camera* cam = new World::Camera(800, 600);
-
-// void mouse_cb(GLFWwindow* window, double xpos, double ypos)
-// {
-// 	static bool firstTime = true;
-// 	static double px = 0;
-// 	static double py = 0;
-//
-// 	if(firstTime)
-// 	{
-// 		px = xpos;
-// 		py = ypos;
-// 		firstTime = false;
-// 	}
-//
-// 	double dx = xpos - px;
-// 	double dy = ypos - py;
-// 	px = xpos;
-// 	py = ypos;
-//
-// 	double sensitivity = 0.01;
-// 	dx *= sensitivity;
-// 	dy *= sensitivity;
-//
-// 	cam->yaw += dx;
-// 	cam->pitch -= dy;
-// }
-
 int main()
 {
+	std::shared_ptr<Platform::Window> window = std::make_shared<Platform::Window>(800, 600);
 	Input::InputManager* inputManager = Input::InputManager::getInstance();
+	World::Camera* cam = new World::Camera(800, 600);
 	Log::Init(LOG_LEVEL_INFO);
 
-	std::shared_ptr<Platform::Window> window = std::make_shared<Platform::Window>(800, 600);
 
 
 	// std::vector<double> data = {

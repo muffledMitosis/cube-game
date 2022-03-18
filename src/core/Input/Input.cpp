@@ -8,6 +8,7 @@ namespace Input
 {
 
 InputManager* InputManager::instance = nullptr;
+std::vector<MouseCB> InputManager::mouseFunctions;
 
 
 InputManager::InputManager()

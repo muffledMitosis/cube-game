@@ -1,3 +1,4 @@
+#include <vector>
 #include "Camera.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
@@ -7,6 +8,7 @@
 #include <GLFW/glfw3.h>
 
 namespace World {
+
 	Camera::Camera(unsigned int width, unsigned int height)
 	{
 		this->projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
