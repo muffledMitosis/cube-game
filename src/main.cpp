@@ -2,50 +2,31 @@
 
 World::Camera* cam = new World::Camera(800, 600);
 
-// glm::vec3 cameraPos = glm::vec3(0, 0, 3);
-// glm::vec3 cameraFront = glm::vec3(0, 0, -1);
-// glm::vec3 cameraUp = glm::vec3(0, 1, 0);
-// float yaw = -90;
-// float pitch = 0;
-
-void processInput(GLFWwindow *window)
-{
-    const float cameraSpeed = 0.05f; // adjust accordingly
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        cam->position += cameraSpeed * cam->front;
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        cam->position -= cameraSpeed * cam->front;
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        cam->position -= glm::normalize(glm::cross(cam->front, cam->up)) * cameraSpeed;
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        cam->position += glm::normalize(glm::cross(cam->front, cam->up)) * cameraSpeed;
-}
-
-void mouse_cb(GLFWwindow* window, double xpos, double ypos)
-{
-	static bool firstTime = true;
-	static double px = 0;
-	static double py = 0;
-
-	if(firstTime)
-	{
-		px = xpos;
-		py = ypos;
-		firstTime = false;
-	}
-
-	double dx = xpos - px;
-	double dy = ypos - py;
-	px = xpos;
-	py = ypos;
-
-	double sensitivity = 0.01;
-	dx *= sensitivity;
-	dy *= sensitivity;
-
-	cam->yaw += dx;
-	cam->pitch -= dy;
-}
+// void mouse_cb(GLFWwindow* window, double xpos, double ypos)
+// {
+// 	static bool firstTime = true;
+// 	static double px = 0;
+// 	static double py = 0;
+//
+// 	if(firstTime)
+// 	{
+// 		px = xpos;
+// 		py = ypos;
+// 		firstTime = false;
+// 	}
+//
+// 	double dx = xpos - px;
+// 	double dy = ypos - py;
+// 	px = xpos;
+// 	py = ypos;
+//
+// 	double sensitivity = 0.01;
+// 	dx *= sensitivity;
+// 	dy *= sensitivity;
+//
+// 	cam->yaw += dx;
+// 	cam->pitch -= dy;
+// }
 
 int main()
 {
@@ -184,7 +165,7 @@ int main()
 	ImGui_ImplOpenGL3_Init();
 
 	glfwSetInputMode(window->getRawWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	glfwSetCursorPosCallback(window->getRawWindow(), mouse_cb);
+	// glfwSetCursorPosCallback(window->getRawWindow(), mouse_cb);
 
 	while(!window->isClosed())
 	{
@@ -199,7 +180,8 @@ int main()
 
 	cam->update();
 
-	processInput(window->getRawWindow());
+	// processInput(window->getRawWindow());
+	inputManager->PollInputs(window.get());
 	glm::mat4 view;
 	view = cam->getView();
 

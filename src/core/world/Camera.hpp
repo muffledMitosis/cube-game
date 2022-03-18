@@ -1,6 +1,8 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <vector>
+#include "../Components/Component.hpp"
 
 namespace World {
 class Camera
@@ -12,9 +14,12 @@ public:
 	glm::vec3 direction;
 
 	glm::mat4 projection;
+	const float movementSpeed = 0.05f;
 
 	float yaw = -90.0;
 	float pitch = 0.0;
+
+	std::vector<Component> components;
 
 	Camera(unsigned int width, unsigned int height);
 	~Camera();
