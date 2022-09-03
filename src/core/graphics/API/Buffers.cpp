@@ -5,7 +5,7 @@
 #include <unordered_map>
 
 #include <stb_image.h>
-#include "../Log.h"
+#include "../../Log.h"
 #include <iostream>
 
 namespace Graphics {

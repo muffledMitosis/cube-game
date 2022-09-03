@@ -2,10 +2,12 @@
 #include <string>
 #include <filesystem>
 #include <unordered_map>
-#include "../../Log.h"
+#include "../../../Log.h"
 #include "glad/glad.h"
 
-#include <glm/vec3.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Graphics {
 
@@ -45,6 +47,7 @@ public:
 		}
 	}
 	void setVec3(const std::string& var, const glm::vec3& data);
+	void setMat4(const std::string& var, const glm::mat4& data);
 
 	Graphics::ShaderProgram getProgram();
 };

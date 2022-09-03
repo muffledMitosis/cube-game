@@ -59,3 +59,15 @@ target_include_directories(App PUBLIC ./lib/glm/)
 # ---------- STB ----------
 
 target_include_directories(App PUBLIC ./lib/stb/)
+
+# # ---------- IMGUI ----------
+
+set(IMGUI_PATH ./lib/imgui/)
+
+file(GLOB imgui_src CONFIGURE_DEPENDS ${IMGUI_PATH}/*.cpp)
+list(APPEND imgui_src ${IMGUI_PATH}/backends/imgui_impl_opengl3.cpp)
+list(APPEND imgui_src ${IMGUI_PATH}/backends/imgui_impl_glfw.cpp)
+add_library(IMGUI STATIC ${imgui_src})
+target_include_directories(IMGUI PUBLIC ./lib/imgui/ ./lib/glfw/include/)
+target_include_directories(App PUBLIC ./lib/imgui/)
+target_link_libraries(App PUBLIC IMGUI)
